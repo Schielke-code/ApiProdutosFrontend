@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Produtos;
 use Illuminate\Http\Request;
+use League\CommonMark\Inline\Element\Image;
 
 class ProdutosController extends Controller
 {
@@ -42,7 +43,6 @@ class ProdutosController extends Controller
 
     public function store(Request $request)
     {
-        $file = new \CURLFile($_FILES['image']['tmp_name'], $_FILES['image']['type'], $_FILES['image']['name']);
 
         if($_FILES['image']['size'] == 0){
             if(isset($request->produto)){
@@ -76,7 +76,8 @@ class ProdutosController extends Controller
                     'preco' => $request->preco,
                     'produto' => $produtos,
                     'kit' => $request->kit,
-                    'fileImage' => $file
+                    '_method' => 'PUT',
+                    'fileImage'=> new \CURLFILE($_FILES['image']['tmp_name'], $_FILES['image']['type'], $_FILES['image']['name'])
                 ];
             }else{
                 $post = [
@@ -85,26 +86,35 @@ class ProdutosController extends Controller
                     'descricao' => $request->descricao,
                     'preco' => $request->preco,
                     'kit' => $request->kit,
-                    'fileImage' => $file
+                    '_method' => 'PUT',
+                    'fileImage'=> new \CURLFILE($_FILES['image']['tmp_name'], $_FILES['image']['type'], $_FILES['image']['name'])
                 ];
             }
         }
-
-
         $headers = array(
             "cache-control: no-cache",
             "Authorization: Bearer $request->token"
         );
 
-        $curl = curl_init(env('DOMINIO_API').'/api/produtos/store');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
-        curl_setopt($curl, CURLOPT_HTTPHEADER,  $headers);
-        $result = curl_exec($curl);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://127.0.0.1:8000/api/produtos/store",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $post,
+            CURLOPT_HTTPHEADER => $headers,
+        ));
+
+        $response = curl_exec($curl);
         curl_close($curl);
-        $result = json_decode( $result );
+        echo $response;
+        $response = json_decode($response);
         return redirect()->route('produtos.list');
 
     }

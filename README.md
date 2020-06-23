@@ -29,8 +29,8 @@ já esta onfigurado? então podemos seguir em frente...
 	
 	DOMINIO_API="http://127.0.0.1:8000"
     DOMINIO_FRONT="http://127.0.0.1:8001"
-    
 </p>
+<span>se a posrta for diferente de  8000 e 8001 n esqueça de alteras no código acima</span>
 <p>
     Esse valores podem ser obtidos rodando o comando <code>php artisan serve</code>  em seu terminal, o valor retornando no projeto onde esta o backend 
     deve ser adicionado no 'DOMINIO_API', e o valor obtido no projeto front end (este repositório) deve ser adicionado em DOMINIO_FRONT 
