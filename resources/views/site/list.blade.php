@@ -17,7 +17,7 @@
                 <th class='text-center  py-2'>Imagem</th>
                 <th class='text-center  py-2'>Preço</th>
                 <th class='text-center  py-2'>Tipo</th>
-                <th class='text-center  py-2'>Descricao</th>
+                <th class='text-center  py-2'>Detalhes</th>
                 <th class='text-center  py-2'>Delete</th>
             </tr>
 
@@ -31,7 +31,7 @@
                 <th class='text-center  py-2'>Imagem</th>
                 <th class='text-center  py-2'>Preço</th>
                 <th class='text-center  py-2'>Tipo</th>
-                <th class='text-center  py-2'>Descricao</th>
+                <th class='text-center  py-2'>Detalhes</th>
                 <th class='text-center  py-2'>Delete</th>
             </tr>
             </tfoot>
@@ -79,7 +79,7 @@
                             "<th class='text-center  py-2'><img style='width:100px' src='" +'{{ env('DOMINIO_API')}}'+"/storage/imagens/produtos/" +produto.image+"'></th>" +
                             "<th class='money text-center  py-2'>"+produto.preco+"</th>" +
                             "<th class='text-center  py-2'>"+produto.tipo+"</th>" +
-                            "<th class='text-center  py-2'>"+produto.descricao+"</th>" +
+                            "<th class='text-center  py-2'><a onclick='teste("+produto.id+")' href='#'  class='btn btn-success'> <i class='far fa-eye'></i> <b>Detalhes</b></a> </th>"+
                             "<th class='text-center  py-2'><a href='" +'{{ env('DOMINIO_FRONT')}}'+"/produtos/delete/"+produto.id+"'  class='btn btn-danger'> <i class='fas fa-trash-alt'></i> <b>Delete</b></a> </th>"+
                             "</tr>";
                         $("#listaClientes").append(produto);
@@ -129,6 +129,11 @@
         });
 
 
+        function teste(id) {
+            window.open('{{ env('DOMINIO_FRONT')}}/produtos/show/'+id+'',    '_blank', 'location=yes,height=600,width=600, left='+(window.innerWidth-600)/2+', top='+(window.innerHeight-600)/2+', scrollbars=yes,status=yes');
+        }
+
+
         function delet(id){
             var url = '/api/produtos/delete/'+id;
             alert(url);
@@ -140,7 +145,7 @@
                 contentType: "application/json; charset=utf-8",
                 cache: false,
                 error: function(error) {
-                   console.log(error);
+                    console.log(error);
                 },
                 success: function(response) {
                     console.log(response);

@@ -126,6 +126,27 @@ class ProdutosController extends Controller
         return view('site.list');
     }
 
+    public function show($id)
+    {
+        $headers = array(
+            "cache-control: no-cache",
+        );
+
+        $curl = curl_init(env('DOMINIO_API')."/api/produtos/show/$id");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_HTTPHEADER,  $headers);
+        $result  = curl_exec($curl);
+        curl_close($curl);
+        $produtos = json_decode( $result );
+
+        if(isset($produtos->sucesso)){
+            $sucesso = $produtos->sucesso;
+            return view('site.show')->with(compact('produtos', 'sucesso'));
+        }
+    }
+
     public function destroy($id){
 
         $headers = array(

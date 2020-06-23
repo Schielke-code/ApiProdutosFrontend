@@ -18,4 +18,5 @@ Route::group(['prefix'=>'produtos'], function(){
     Route::get('/list', ['uses' => 'ProdutosController@list', 'as' => 'produtos.list']);
     Route::post('/store', ['uses' => 'ProdutosController@store', 'as' => 'produtos.store']);
     Route::get('/delete/{id?}', ['uses' => 'ProdutosController@destroy', 'as' => 'produtos.delete']);
+    Route::get('/show/{id?}', ['uses' => 'ProdutosController@show', 'as' => 'produtos.show']);
 });
