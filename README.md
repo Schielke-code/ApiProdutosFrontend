@@ -1,5 +1,5 @@
 <h2 style="color:#F00">NOTA</h2>
-Tutorial: http://codezeus.com.br/tutorial.mp4<br/>
+Tutorial: http://codezeus.com.br/tutorial.mp4 | Para ver o projeto funcionando basta ir para o final do vídeo<br/> 
 Este Projeto possui o Backend desacomplando deste repositório, para que possamos de fato testar a  API. configure primeiramente o Backend deste projeto <a href="https://github.com/Schielke-code/ApiProdutosBackend" target="_blank">clicando aqui</a>, o backend 
 já esta onfigurado? então podemos seguir em frente...
 
