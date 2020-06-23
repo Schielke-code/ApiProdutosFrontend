@@ -7,6 +7,7 @@
 
     </style>
     <div class="container mt-5">
+        <p class="text-primary"><b>Listando de 5 em 5 | a páginação só vai aparece quando tiver mais de 5 itens</b></p>
         <table class="display w-100">
 
             <tr  style="border-bottom: 1px solid #000000!important;">
@@ -67,8 +68,6 @@
                     console.log(response);
 
 
-
-
                     // Interpretando retorno JSON...
                     var produtos = response.data;
 
@@ -86,20 +85,35 @@
                         $("#listaClientes").append(produto);
                     });
 
+                    //lógica d páginação
+                    if(page == null){
+                        var  prev = 1;
+                        var  next = 2;
+                    }else{
+                        var  prev = parseInt(page) - 1;
+                        var  next = parseInt(page) + 1;
+                    }
 
-
-                    if(response.next_page_url != 'null'){
-                        console.log(page);
-                        if(page == null){
-                            var  prev = 1;
-                            var  next = 2;
-                        }else{
-                            var  prev = parseInt(page) - 1;
-                            var  next = parseInt(page) + 1;
+                    var cal = response.total  - response.to;
+                    if(cal == 0 && response.next_page_url == null && response.from == 1){
+                        var paginacao = " <a class='btn btn-primary' href='#' style='pointer-events: none;  opacity: 0.5;'>Anterio</a> <a class='btn btn-primary' href='#' style='pointer-events: none;  opacity: 0.5;'>Proxíma</a>"
+                        $("#paginacao").append(paginacao );
+                    }else{
+                        console.log('agora ta aqui');
+                        if(cal > 0 && response.next_page_url != null && response.current_page != 1){
+                            var paginacao = " <a class='btn btn-primary' href='" +'{{ env('DOMINIO_FRONT')}}' +"/produtos/list?page="+prev+"'>Anterio</a> <a class='btn btn-primary' href='" +'{{ env('DOMINIO_FRONT')}}'+"/produtos/list?page="+next+"' disable>Proxíma</a>"
+                            $("#paginacao").append(paginacao );
                         }
 
-                        var paginacao = " <a class='btn btn-primary' href='" +'{{ env('DOMINIO_FRONT')}}' +"/produtos/list?page="+prev+"'>Anterio</a> <a class='btn btn-primary' href='" +'{{ env('DOMINIO_FRONT')}}'+"/produtos/list?page="+next+"'>Proxíma</a>"
-                        $("#paginacao").append(paginacao );
+                        if(cal == 0 && response.next_page_url == null){
+                            var paginacao = " <a class='btn btn-primary' href='" +'{{ env('DOMINIO_FRONT')}}' +"/produtos/list?page="+prev+"'>Anterio</a> <a class='btn btn-primary' href='#' style='pointer-events: none;  opacity: 0.5;'>Proxíma</a>"
+                            $("#paginacao").append(paginacao );
+                        }
+
+                        if(response.current_page == 1 && response.next_page_url != null){
+                            var paginacao = " <a class='btn btn-primary' href='#' style='pointer-events: none;  opacity: 0.5;'>Anterio</a> <a class='btn btn-primary' href='" +'{{ env('DOMINIO_FRONT')}}'+"/produtos/list?page="+next+"' disable>Proxíma</a>"
+                            $("#paginacao").append(paginacao );
+                        }
                     }
 
 
