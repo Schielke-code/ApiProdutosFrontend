@@ -17,10 +17,6 @@ já esta onfigurado? então podemos seguir em frente...
 	Abra novamente o seu terminal e gere uma chave com o seguinte comando:  <code>php artisan key:generate</code>
 </p>
 
-<p>
-	Agora vamos limpar o seu arquivo de configuração usando o comando:  <code>php artisan config:clear</code>
-</p>
-
 
 <h2>Configurando o arquivo .env</h2>
 
