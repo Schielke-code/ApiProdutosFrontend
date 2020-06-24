@@ -47,9 +47,9 @@
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
             if(!page){
-                var url = "http://127.0.0.1:8000/api/produtos/list";
+                var url = "{{ env('DOMINIO_API')}}/api/produtos/list";
             }else{
-                var url = "http://127.0.0.1:8000/api/produtos/list?page="+page;
+                var url = "{{ env('DOMINIO_API')}}/api/produtos/list?page="+page;
             }
 
             //Capturar Dados Usando Método AJAX do jQuery
