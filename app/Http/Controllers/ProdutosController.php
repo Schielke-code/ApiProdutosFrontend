@@ -99,7 +99,7 @@ class ProdutosController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://127.0.0.1:8000/api/produtos/store",
+            CURLOPT_URL => env('DOMINIO_API')."/api/produtos/store",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
